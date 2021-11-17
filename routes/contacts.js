@@ -7,11 +7,10 @@ const auth = require('../middleware/auth')
 
 
 //  @router     GET api/contacts
-//  @desc       Get logged in user
+//  @desc       Get contacts of the logged user
 //  @acess      Private
 router.get('/', auth, async (req, res) => {
     try {
-
         const contacts = await Contact.find({ user: req.user.id }).sort({ date: -1 })
 
         res.json(contacts)

@@ -10,11 +10,10 @@ const auth = require('../middleware/auth')
 
 //  @router     GET api/auth
 //  @desc       Get logged in user
-//  @acess      Private
+//  @access     Private
 router.get('/', auth, async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select('-password')
-
         res.json(user)
     } catch (error) {
         console.log(error.message)
@@ -31,10 +30,10 @@ router.post('/', [
         min: 6
     })
 ], async (req, res) => {
-    const erros = validationResult(req)
+    const errors = validationResult(req)
 
-    if(!erros.isEmpty())
-        res.status(400).json({ errors: erros.array() })
+    if(!errors.isEmpty())
+        res.status(400).json({ errors: errors.array() })
 
     const { email, password } = req.body
 
