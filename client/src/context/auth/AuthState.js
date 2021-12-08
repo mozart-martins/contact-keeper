@@ -1,6 +1,8 @@
 import React, { useReducer } from 'react'
+import axios from 'axios'
 import AuthContext from './authContext'
 import authReducer from './authReducer'
+import setAuthToken from '../../utils/setAuthToken'
 import { 
     REGISTER_SUCCESS,
     REGISTER_FAIL,
@@ -25,14 +27,57 @@ import {
     const [state, dispatch] = useReducer(authReducer, initialState)
 
     // Load User
+    const loadUser = async () => {
+        if(localStorage.token)
+            setAuthToken(localStorage.token)
+
+        try {
+            const res = await axios.get('/api/auth')
+
+            dispatch({
+                type: USER_LOADED,
+                payload: res.data
+            })
+        } catch (error) {
+            dispatch({
+                type: AUTH_ERROR
+            })
+        }
+    }
 
     // Register User
+    const register = async formData => {
+        const config = {
+            headers: {
+                'Content-type': 'application/json'
+            }
+        }
+
+        try {
+            // Por causa da configuração 'proxy' não é preciso colocar a URL inteira
+            const res = await axios.post('api/users', formData, config)
+
+            dispatch({
+                type: REGISTER_SUCCESS,
+                payload: res.data
+            })
+
+            loadUser()
+        } catch(err) {
+            dispatch({
+                type: REGISTER_FAIL,
+                payload: err.response.data.msg
+            })
+        }
+
+    }
 
     // Login User
 
     // Logout
 
     // Clear Errors
+    const clearErrors = () => dispatch({ type: CLEAR_ERRORS })
 
 
     return (
@@ -43,6 +88,9 @@ import {
                 loading: state.loading,
                 user: state.user,
                 error: state.error,
+                register,
+                clearErrors,
+                loadUser
             }}
         >
             {props.children}
