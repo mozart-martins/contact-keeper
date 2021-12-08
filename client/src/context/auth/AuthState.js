@@ -28,12 +28,9 @@ import {
 
     // Load User
     const loadUser = async () => {
-<<<<<<< HEAD
         if(localStorage.token)
             setAuthToken(localStorage.token)
 
-=======
->>>>>>> c8fa8461eee0288d0600684d5ba85800574f0871
         try {
             const res = await axios.get('/api/auth')
 
