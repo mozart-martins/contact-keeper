@@ -28,9 +28,12 @@ import {
 
     // Load User
     const loadUser = async () => {
+<<<<<<< HEAD
         if(localStorage.token)
             setAuthToken(localStorage.token)
 
+=======
+>>>>>>> c8fa8461eee0288d0600684d5ba85800574f0871
         try {
             const res = await axios.get('/api/auth')
 
@@ -61,20 +64,19 @@ import {
                 type: REGISTER_SUCCESS,
                 payload: res.data
             })
-
-            loadUser()
-        } catch(err) {
+        } catch (err) {
             dispatch({
                 type: REGISTER_FAIL,
                 payload: err.response.data.msg
             })
         }
-
     }
 
     // Login User
+    const loginUser = () => console.log('loginUser')
 
     // Logout
+    const logoutUser = () => console.log('logoutUser')
 
     // Clear Errors
     const clearErrors = () => dispatch({ type: CLEAR_ERRORS })
@@ -88,9 +90,11 @@ import {
                 loading: state.loading,
                 user: state.user,
                 error: state.error,
+                loadUser,
                 register,
-                clearErrors,
-                loadUser
+                loginUser,
+                logoutUser,
+                clearErrors
             }}
         >
             {props.children}

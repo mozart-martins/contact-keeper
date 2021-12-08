@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 import { PromiseProvider } from 'mongoose'
+=======
+>>>>>>> c8fa8461eee0288d0600684d5ba85800574f0871
 import React, { useState, useContext, useEffect } from 'react'
 import AlertContext from '../../context/alert/alertContext'
 import AuthContext from '../../context/auth/authContext'
@@ -20,6 +23,15 @@ const Register = props => {
         }
         //eslint-disable-next-line
     }, [error, isAuthenticated, props.history])
+
+    const { register, error, clearErrors } = authContext
+
+    useEffect(() => {
+        if(error === 'User already exits') {
+            setAlert(error, 'danger')
+            clearErrors()
+        }
+    }, [error])
 
     const [user, setUser] = useState({
         name: '',
@@ -68,11 +80,11 @@ const Register = props => {
                 </div>
                 <div className="form-group">
                     <label htmlFor="password">Password</label>
-                    <input required minLength="6" type="password" name="password" value={password} onChange={onChange} />
+                    <input minLength="6" type="password" name="password" value={password} onChange={onChange} />
                 </div>
                 <div className="form-group">
                     <label htmlFor="password2">Confirm Password</label>
-                    <input required minLength="6" type="password" name="password2" value={password2} onChange={onChange} />
+                    <input minLength="6" type="password" name="password2" value={password2} onChange={onChange} />
                 </div>
                 <input type="submit" value="Register" className="btn btn-primary btn-block"/>
             </form>
