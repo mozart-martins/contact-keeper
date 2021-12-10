@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React, { useReducer, useEffect } from 'react'
 import axios from 'axios'
 import AuthContext from './authContext'
 import authReducer from './authReducer'
@@ -25,6 +25,12 @@ import {
     }
 
     const [state, dispatch] = useReducer(authReducer, initialState)
+
+    // Monitorando o Estado da Aplicação
+    useEffect(()=>{
+        console.log(state)
+        //eslint-disable-next-line
+    }, [state])
 
     // Load User
     const loadUser = async () => {
@@ -70,7 +76,28 @@ import {
     }
 
     // Login User
-    const loginUser = () => console.log('loginUser')
+    const loginUser = async formData => {
+        const config = {
+            headers: {
+                'Content-type': 'application/json'
+            }
+        }
+
+        try {
+            // Por causa da configuração 'proxy' não é preciso colocar a URL inteira
+            const res = await axios.post('api/auth', formData, config)
+
+            dispatch({
+                type: LOGIN_SUCCESS,
+                payload: res.data
+            })
+        } catch (err) {
+            dispatch({
+                type: LOGIN_FAIL,
+                payload: err.response.data.msg
+            })
+        }
+    }
 
     // Logout
     const logoutUser = () => console.log('logoutUser')
