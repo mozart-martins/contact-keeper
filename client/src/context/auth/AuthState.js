@@ -100,7 +100,7 @@ import {
     }
 
     // Logout
-    const logoutUser = () => console.log('logoutUser')
+    const logoutUser = () => dispatch({ type: LOGOUT })
 
     // Clear Errors
     const clearErrors = () => dispatch({ type: CLEAR_ERRORS })
