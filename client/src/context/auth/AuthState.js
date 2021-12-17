@@ -26,11 +26,6 @@ import {
 
     const [state, dispatch] = useReducer(authReducer, initialState)
 
-    // Monitorando o Estado da Aplicação
-    useEffect(()=>{
-        console.log(state)
-        //eslint-disable-next-line
-    }, [state])
 
     // Load User
     const loadUser = async () => {
