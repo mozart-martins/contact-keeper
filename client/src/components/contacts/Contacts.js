@@ -16,8 +16,6 @@ const Contacts = () => {
 
     if(contacts === null || contacts === undefined) return <h4>Please, add a contact...</h4>
 
-    console.log(contacts)
-
     return (
         <Fragment>
             { !loading && contacts !== null && contacts !== undefined ? (
